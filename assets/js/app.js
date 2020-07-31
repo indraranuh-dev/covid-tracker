@@ -6,7 +6,7 @@ $(function () {
         "url": "https://api.kawalcorona.com/indonesia",
         "method": "GET",
         "headers": {
-            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": "https://indraranuh-dev.github.io/covid-tracker/",
             "Content-Type": "application/json",
             "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
             "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
