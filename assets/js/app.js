@@ -5,7 +5,10 @@ $(function () {
         // "crossDomain": true,
         "url": "https://api.kawalcorona.com/indonesia",
         "method": "GET",
+        "timeout": 0,
         "headers": {
+            "": "",
+            "Cookie": "__cfduid=d9d21cf37aac0fa4aeed9f405ef81bb2e1596191018",
             "Access-Control-Allow-Origin": "https://indraranuh-dev.github.io/covid-tracker/",
             "Content-Type": "application/json",
             "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
