@@ -1,18 +1,23 @@
 $(function () {
     // "url": "https://covid-19-data.p.rapidapi.com/report/country/name?format=json&date=2020-04-01&name=Indonesia",
-    const settingsIDCumulative = {
-        "async": true,
+    const options = {
+        // "async": true,
         // "crossDomain": true,
+        // "url": "https://api.kawalcorona.com/indonesia",
+        // "method": "GET",
+        // "timeout": 0,
+        // "headers": {
+        //     "": "",
+        //     "Cookie": "__cfduid=d9d21cf37aac0fa4aeed9f405ef81bb2e1596191018",
+        //     "Access-Control-Allow-Origin": "https://indraranuh-dev.github.io/covid-tracker/",
+        //     "Content-Type": "application/json",
+        //     "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+        //     "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+        // }
         "url": "https://api.kawalcorona.com/indonesia",
         "method": "GET",
-        "timeout": 0,
         "headers": {
-            "": "",
-            "Cookie": "__cfduid=d9d21cf37aac0fa4aeed9f405ef81bb2e1596191018",
-            "Access-Control-Allow-Origin": "https://indraranuh-dev.github.io/covid-tracker/",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+            "Access-Control-Allow-Origin": "*",
         }
     }
     const settingsIDAll = {
@@ -23,9 +28,9 @@ $(function () {
     }
 
     const getAllData = async function () {
-        $.ajax(settingsIDCumulative).done(function (response) {
-            console.log(JSON.parse(response));
-        });
+        // $.ajax(settingsIDCumulative).done(function (response) {
+        //     console.log(JSON.parse(response));
+        // });
         $.ajax(settingsIDAll).done(function (response) {
             console.log(JSON.parse(response));
         });
@@ -33,6 +38,14 @@ $(function () {
 
     $(document).ready(function () {
         getAllData();
+        jQuery.ajaxPrefilter(function (options) {
+            if (options.crossDomain && jQuery.support.cors) {
+                options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+            }
+        });
+        $.ajax(options).done(function (response) {
+            console.log(JSON.parse(response));
+        });
     })
 
 });
