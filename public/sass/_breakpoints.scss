@@ -1,4 +1,12 @@
 @include media-breakpoint-up(lg) {
+    section.hero {
+        .hero-desc {
+            font-family: 'Major Mono Display', monospace;
+            font-size: 18px;
+            text-transform: initial;
+            text-align: left;
+        }
+    }
 
     .table {
         width: 100% !important;
@@ -11,6 +19,14 @@
 }
 
 @include media-breakpoint-up(md) {
+    section.hero {
+        .hero-desc {
+            font-family: 'Major Mono Display', monospace;
+            font-size: 18px;
+            text-transform: initial;
+            text-align: left;
+        }
+    }
 
     .table {
         width: 100% !important;

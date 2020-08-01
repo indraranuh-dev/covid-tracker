@@ -8,8 +8,8 @@ $(function () {
             method: 'GET'
         };
     };
-    const cumulativeURL = "http://localhost:3000/api/cumulative";
-    const allURL = "http://localhost:3000/api/all";
+    const cumulativeURL = "https://covid-tracker-id.herokuapp.com/api/cumulative";
+    const allURL = "https://covid-tracker-id.herokuapp.com/api/all";
 
     // Fetch cumulative data
     $.ajax(setting(cumulativeURL)).done(data => {
