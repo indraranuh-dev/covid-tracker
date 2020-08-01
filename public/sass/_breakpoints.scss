@@ -1,0 +1,23 @@
+@include media-breakpoint-up(lg) {
+
+    .table {
+        width: 100% !important;
+    }
+
+    .logo.lg {
+        font-size: 60px !important;
+        text-align: left !important;
+    }
+}
+
+@include media-breakpoint-up(md) {
+
+    .table {
+        width: 100% !important;
+    }
+
+    .logo.lg {
+        font-size: 60px !important;
+        text-align: left !important;
+    }
+}

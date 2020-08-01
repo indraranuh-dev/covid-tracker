@@ -1,37 +1,103 @@
 $(function () {
-    const settingsIDCumulative = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://api.kawalcorona.com/indonesia",
-        "method": "GET",
-        "headers": {
-            "Access-Control-Allow-Origin": "*",
-        }
+    const h6 = function (val) {
+        return `<h6 class="card-value">${val}</h6>`
     }
-    const settingsIDAll = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pjson&token=",
-        "method": "GET",
-    }
+    const setting = function (URL) {
+        return {
+            url: URL,
+            method: 'GET'
+        };
+    };
+    const cumulativeURL = "http://localhost:3000/api/cumulative";
+    const allURL = "http://localhost:3000/api/all";
 
-    const getAllData = async function () {
-        $.ajax(settingsIDCumulative).done(function (response) {
-            console.log(JSON.parse(response));
-        });
-        $.ajax(settingsIDAll).done(function (response) {
-            console.log(JSON.parse(response));
-        });
-    }
+    // Fetch cumulative data
+    $.ajax(setting(cumulativeURL)).done(data => {
+        const obj = Object.entries(data[0]);
+        $('section .centered').remove();
 
-    $(document).ready(function () {
-        jQuery.ajaxPrefilter(function (options) {
-            if (options.crossDomain && jQuery.support.cors) {
-                options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-            }
-        });
-
-        getAllData();
+        $.each($('.card-info .card-body'), function (i, val) {
+            $(this).find('h5').removeClass('m-0');
+            $(this).find('h5').addClass('mb-1');
+            $(this).append(h6(obj[i + 1][1])).fadeIn();
+        })
     })
 
-});
+    // Fetch all indonesian data
+    const t = $('table').DataTable({
+        "dom": `<'row mb-3'
+            <'col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0'l>
+            <'col-lg-6 col-md-6 col-sm-12 text-right text-sm-left'f>
+        >
+        <'row mb-2'
+            <'col-12'<'table-responsive' t>>
+        >
+        <'row mb-3'
+            <'col-lg-6 col-md-6 col-sm-12 mb-3 mb-lg-0 text-right text-sm-left'i>
+            <'col-lg-6 col-md-6 col-sm-12 text-right text-sm-left'p>
+        >`,
+        "ajax": allURL,
+        "columns": [{
+                "data": null
+            },
+            {
+                "data": "attributes.Provinsi"
+            },
+            {
+                "data": "attributes.Kasus_Posi"
+            },
+            {
+                "data": "attributes.Kasus_Semb"
+            },
+            {
+                "data": "attributes.Kasus_Meni"
+            },
+        ],
+        "columnDefs": [{
+            "searchable": false,
+            "orderable": false,
+            "width": "5%",
+            "className": "text-center",
+            "targets": 0
+        }, {
+            "targets": 1,
+            "width": "900px"
+        }, {
+            "targets": 2,
+            "width": "15%"
+        }, {
+
+            "targets": 3,
+            "width": "15%"
+        }, {
+
+            "targets": 4,
+            "width": "15%"
+        }, ],
+        "order": [
+            [1, 'asc']
+        ],
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ]
+    });
+
+    t.on('order.dt search.dt', function () {
+        t.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    })
+
+    $(document).ready(function () {
+        $('.modal').modal('show');
+        $(window).scroll(function (event) {
+            const scroll = $(window).scrollTop();
+            if (scroll > 10) $('nav').addClass('scrolled');
+            else $('nav').removeClass('scrolled');
+        });
+    })
+})
