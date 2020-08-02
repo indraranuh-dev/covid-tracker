@@ -217,10 +217,14 @@ footer {
     height: 100px;
 
     .footer-text {
-        font-family: 'Major Mono Display', monospace;
-        font-size: 20px;
-        letter-spacing: 2px;
-        font-weight: 800;
+        font-weight: 600;
+
+        strong {
+            font-family: 'Major Mono Display', monospace;
+            font-size: 20px;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
     }
 }
 
